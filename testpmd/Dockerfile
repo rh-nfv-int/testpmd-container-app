@@ -47,10 +47,6 @@ RUN dnf install -y \
     python3 \
     rdma-core \
     tcpdump \
-    && dnf install -y \
-    htop \
-    lsof \
-    perf \
     && dnf clean all
 
 # copy testpmd runtime cmdline file
