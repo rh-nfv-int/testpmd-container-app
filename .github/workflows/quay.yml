@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - test
+      - gha_build # TODO: Remove once validated
 
 env:
   REGISTRY: quay.io
