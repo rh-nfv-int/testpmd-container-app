@@ -1,5 +1,5 @@
 ## Build image
-FROM quay.io/centos/centos:8 as build
+FROM quay.io/centos/centos:stream8 as build
 
 ENV DPDK_VER=19.11
 ENV DPDK_DIR=/usr/src/dpdk-${DPDK_VER}
@@ -7,9 +7,9 @@ ENV RTE_TARGET=x86_64-native-linuxapp-gcc
 ENV RTE_SDK=${DPDK_DIR}
 
 # Install prerequisite packages
-RUN yum groupinstall -y "Development Tools" && \
-    yum install --skip-broken -y wget numactl numactl-devel make libibverbs-devel logrotate rdma-core tcpdump && \
-    yum clean all
+RUN dnf groupinstall -y "Development Tools" && \
+    dnf install --skip-broken -y wget numactl numactl-devel make libibverbs-devel logrotate rdma-core tcpdump && \
+    dnf clean all
 
 # Download the DPDK libraries
 RUN wget http://fast.dpdk.org/rel/dpdk-${DPDK_VER}.tar.xz -P /usr/src && \
@@ -36,7 +36,7 @@ RUN cp -af $(pwd)testpmd-as-load-balancer/v19.11/test-pmd ${DPDK_DIR}/app/test-p
     cp testpmd /usr/local/bin
 
 ## testpmd image
-FROM quay.io/centos/centos:8
+FROM quay.io/centos/centos:stream8
 
 # Required libraries and debugging tools
 RUN dnf install -y \
